@@ -1,0 +1,19 @@
+{
+  "name": "troko-bot",
+  "version": "1.0.0",
+  "description": "Backend service for Troko bot",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MonserratGenereux/Moviles-Backend.git"
+  },
+  "author": "Kevin Cabrera, Montserrat Genereaux, Diego Toledo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MonserratGenereux/Moviles-Backend/issues"
+  },
+  "homepage": "https://github.com/MonserratGenereux/Moviles-Backend#readme"
+}
