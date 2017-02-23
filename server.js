@@ -3,10 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const api = require('./router');
 
-//Schemas 
-const Responsable = require('./app/models/responsable');
-const Product = require('./app/models/product');
-const store = require('./app/models/stores');
 const app = express();
 
 //MiddleWare
