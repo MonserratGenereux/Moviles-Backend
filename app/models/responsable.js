@@ -6,5 +6,7 @@ module.exports = mongoose.model("Responsable",{
     gender: String,
     address: String,
     phone: Number,
-    MemberSince: String
+    MemberSince: String,
+    store: String,
+    email: String
 });

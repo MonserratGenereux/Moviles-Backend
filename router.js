@@ -11,7 +11,7 @@ findAllItems = function (req, res){
 
 //GET
 findByID = function (req, res){
-  Items.find(req.parm.id, function(err, items){
+  Items.findById(req.params._id, function(err, items){
     if(!err) res.send(items);
 	else console.log ('ERROR: ' + err);
 	});
@@ -38,22 +38,24 @@ addItems = function(req,res){
 //PUT (update)
 
 updateItems = function(req,res){
-	Items.findByID(req.parms.id, function(err,items){
+	Items.findById(req.body._id, function(err,items){
 		items.name= req.body.name,
 	    items.cost= req.body.cost,
 	    items.store= req.body.store,
 	    items.description= req.body.description
+
+	    items.save(function(err){
+			if(!err) console.log('item updated');
+			else console.log('ERROR: ' + err);
+		});
 	});
 
-	items.save(function(err){
-		if(!err) console.log('item updated');
-		else console.log('ERROR: ' + err);
-	});
+	
 };
 
 //DELETE
 deleteItem = function (req,res){
-	Items.findByID(req.parms.id, function(err, items){
+	Items.findByID(req.body._id, function(err, items){
 		items.remove(function(err){
 			if(!err) console.log('item deleted');
 			else console.log('ERROR: ' + err);
@@ -62,10 +64,10 @@ deleteItem = function (req,res){
 };
 
 //API ROUTES
-router.get('/items', findAllItems);
-router.get('/items/:id', findByID);
+router.get('/models/product', findAllItems);
+router.get('/models/product/:_id', findByID);
 router.post('/models/product', addItems);
-router.put('/items/:id', updateItems);
-router.delete('/items/:id', deleteItem);
+router.put('/models/product', updateItems);
+router.delete('/models/product', deleteItem);
 
 module.exports= router;

@@ -27,7 +27,7 @@ app.use('/api', api);
 /////////////////////////////////////
 
 //Connection
-mongoose.connect("mongodb://localhost:27017/test", function(err,db){
+mongoose.connect("mongodb://localhost:27017/ProyectoMoviles", function(err,db){
     if(!err){
         console.log("we are connected to mongo");
     }
