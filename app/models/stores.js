@@ -5,5 +5,4 @@ module.exports = mongoose.model("Stores",{
     location: String,
     responsable: String,
     phone: Number,
-    responsable: String
 });

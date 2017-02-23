@@ -19,9 +19,6 @@ findByID = function (req, res){
 
 //POST
 addItems = function(req,res){
-	console.log('POST');
-	console.log(req.body);
-
 	var items = new Items({
 		name: req.body.name,
 	    cost: req.body.cost,

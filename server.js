@@ -34,7 +34,7 @@ mongoose.connect("mongodb://localhost:27017/ProyectoMoviles", function(err,db){
 })
 
 app.get('/', function(req, res){
-	res.send('hola mundo');
+	res.send('Movile API');
 });
 const server = app.listen(port, function(){
     //Response of try to start server
