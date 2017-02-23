@@ -1,31 +1,28 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-
-var mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const api = require('./router');
 
 //Schemas 
-var Responsable = require('./models/responsable');
-var Product = require('./models/product');
-var store = require('./models/stores');
+const Responsable = require('./app/models/responsable');
+const Product = require('./app/models/product');
+const store = require('./app/models/stores');
+const app = express();
 
 //MiddleWare
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 5000;
-var router = express.Router();
+const port = process.env.PORT || 5000;
 
-router.use(function(req, res, next) {
+api.use(function(req, res, next) {
     // do logging
     console.log('Something is happening.');
     next();
 });
 
 //REST functions
-//Item
-app.use('/api', router);
+app.use('/api', api);
 
 /////////////////////////////////////
 
@@ -39,7 +36,7 @@ mongoose.connect("mongodb://localhost:27017/test", function(err,db){
 app.get('/', function(req, res){
 	res.send('hola mundo');
 });
-var server = app.listen(port, function(){
+const server = app.listen(port, function(){
     //Response of try to start server
     console.log("Listening on port", server.address().port )
 })
