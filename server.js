@@ -1,38 +1,31 @@
+require('dotenv').load()
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const morgan = require('morgan')
 const api = require('./router');
 
+// Connect to Mongo
+const connectMongo = require('./config/db')
+connectMongo()
+
+// Define backend server.
 const app = express();
 
-//MiddleWare
+app.use(morgan('tiny'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const port = process.env.PORT || 5000;
 
-api.use(function(req, res, next) {
-    // do logging
-    console.log('Something is happening.');
-    next();
-});
-
 //REST functions
-app.use('/api', api);
-
-/////////////////////////////////////
-
-//Connection
-mongoose.connect("mongodb://localhost:27017/ProyectoMoviles", function(err,db){
-    if(!err){
-        console.log("we are connected to mongo");
-    }
-})
+app.use('/', api);
 
 app.get('/', function(req, res){
 	res.send('Movile API');
 });
+
 const server = app.listen(port, function(){
     //Response of try to start server
-    console.log("Listening on port", server.address().port )
+    console.log("Magic happening on port", server.address().port )
 })
