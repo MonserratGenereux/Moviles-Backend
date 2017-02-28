@@ -46,7 +46,6 @@ addItems = function(req, res) {
 };
 
 //PUT (update)
-
 updateItems = function(req, res) {
   Items.findById(req.body._id, function(err, items) {
     items.name = req.body.name,
