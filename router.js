@@ -3,7 +3,7 @@ const Product = require('./app/models/product');
 
 //GET ALL
 findAllProduct = function(req, res) {
-  Product.find(function(err, items) {
+  Product.find(function(err, product) {
     if (!err) {
       res.send(product)
     } else {
@@ -36,7 +36,7 @@ addProduct = function(req,res){
   });
   product.save(function(err) {
     if (!err) {
-      console.log('Item saved');
+      console.log('Product saved');
       res.send("OK")
     } else {
       res.status(404).end();
@@ -52,7 +52,7 @@ addProduct = function(req,res){
 };
 
 //PUT (update)
-updateItems = function(req, res) {
+updateProduct = function(req, res) {
   Product.findById(req.body._id, function(err, product) {
     product.name = req.body.name,
     product.cost = req.body.cost,
@@ -61,7 +61,7 @@ updateItems = function(req, res) {
 
     product.save(function(err) {
       if (!err) {
-        console.log('Item updated');
+        console.log('Product updated');
         res.send("OK")
       } else {
         res.status(404).end();
