@@ -5,7 +5,7 @@ const Product = require('./app/models/product');
 findAllProduct = function(req, res) {
   Product.find(function(err, product) {
     if (!err) {
-      res.send(product)
+      res.send({"products": product})
     } else {
       res.status(404).end();
       console.log('ERROR: ' + err);
