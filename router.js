@@ -25,15 +25,9 @@ findByID = function(req, res) {
   });
 };
 
-
 //POST
 addProduct = function(req,res){
-  var product = new Product({
-	name: req.body.name,
-    cost: req.body.cost,
-    store: req.body.store,
-    description: req.body.description
-  });
+  var product = new Product(req.body);
   product.save(function(err) {
     if (!err) {
       console.log('Product saved');
@@ -43,32 +37,19 @@ addProduct = function(req,res){
       console.log('ERROR: ' + err);
     }
   });
-  res.send(product);
-	product.save(function(err){
-	  if(!err)console.log('Product saved');
-	  else console.log('ERROR: ' + err)
-	});
-	res.send(product);
 };
 
 //PUT (update)
 updateProduct = function(req, res) {
-  Product.findById(req.body._id, function(err, product) {
-    product.name = req.body.name,
-    product.cost = req.body.cost,
-    product.store = req.body.store,
-    product.description = req.body.description
-
-    product.save(function(err) {
-      if (!err) {
-        console.log('Product updated');
-        res.send("OK")
-      } else {
-        res.status(404).end();
-        console.log('ERROR: ' + err);
-      }
-    });
-  });
+  Product.findOneAndUpdate({_id: req.body._id},{ $set: req.body}, {upsert: true})
+  .then(() => {
+    console.log('Product updated');
+    res.send("OK")
+  })
+  .catch((err) => {
+    res.status(404).end();
+    console.log('ERROR: ' + err);
+  })
 };
 
 //DELETE
@@ -81,11 +62,39 @@ deleteProduct = function (req,res){
   });
 };
 
-//API ROUTES
-router.get('/models/product', findAllProduct);
-router.get('/models/product/:_id', findByID);
-router.post('/models/product', addProduct);
-router.put('/models/product', updateProduct);
-router.delete('/models/product', deleteProduct);
+//GET CATEGORIEs db.getCollection('products').find({categories: "Anillo"})
+findByCategory = function(req, res){
+  Product.find({categories: req.params._category}, function(err, product){
+    if(!err){
+      res.send(product)
+    } else {
+      res.status(404).end();
+      console.log('ERROR: ' + err);
+    }
+  });
+};
 
+//GET ALL
+findAllCategory = function(req, res) {
+  Product.find(function(err, product) {
+    if (!err) {
+      res.send({"categories": product})
+    } else {
+      res.status(404).end();
+      console.log('ERROR: ' + err);
+    }
+  });
+};
+
+//API ROUTES
+router.get('/product', findAllProduct);
+router.get('/product/:_id', findByID);
+router.get('/category/:_category', findByCategory);
+router.get('/category/', findAllCategory);
+router.post('/product', addProduct);
+router.put('/product', updateProduct);
+router.delete('/product', deleteProduct);
+
+
+//find({categories: "Anillo"})
 module.exports = router;
