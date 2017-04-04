@@ -74,11 +74,11 @@ findByCategory = function(req, res){
   });
 };
 
-//GET ALL
-findAllCategory = function(req, res) {
-  Product.find(function(err, product) {
-    if (!err) {
-      res.send({"categories": product})
+//GET ALL CaTEGORIES
+findCategories = function(req, res){
+  Product.find().distinct('categories',function(err, product){
+    if(!err){
+      res.send(product)
     } else {
       res.status(404).end();
       console.log('ERROR: ' + err);
@@ -86,14 +86,17 @@ findAllCategory = function(req, res) {
   });
 };
 
+
+
 //API ROUTES
 router.get('/product', findAllProduct);
 router.get('/product/:_id', findByID);
 router.get('/category/:_category', findByCategory);
-router.get('/category/', findAllCategory);
+router.get('/category/', findCategories);
 router.post('/product', addProduct);
 router.put('/product', updateProduct);
 router.delete('/product', deleteProduct);
+
 
 
 //find({categories: "Anillo"})
